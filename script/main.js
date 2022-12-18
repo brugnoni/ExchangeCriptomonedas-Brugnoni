@@ -88,8 +88,6 @@ function calcular() {
 
 }
 
-
-
 // Utilizando un array muestro al usuario datos relevantes
 // agregue nuevos objetos al array
 // estos datos se muestran en consola y en forma de alerts
