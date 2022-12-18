@@ -6,10 +6,10 @@ let ingresaNombre = prompt("Ingresa tu nombre: ");
 let ingresaEdad = prompt("Ingresa tu edad: ");
 function validarDatos(nombre, edad) {
     if (edad >= 18) {
-        alert("Sr. / Sra. " + nombre + " tienes: "+ edad + " cumples con el requisito de edad, puedes ingresar...")
+        alert("Sr. / Sra. " + nombre + " tienes: "+ edad + " años cumples con el requisito de edad, puedes ingresar...")
     }
     else {
-        alert("Sr. / Sra. " + nombre + "tienes: "+ edad + " no cumples con los requisitos de edad, debes salir del sitio");
+        alert("Sr. / Sra. " + nombre + "tienes: "+ edad + " años no cumples con los requisitos de edad, debes salir del sitio");
     }
 }
 validarDatos(ingresaNombre, ingresaEdad);
