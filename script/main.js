@@ -20,9 +20,9 @@ validarDatos(ingresaNombre, ingresaEdad);
 function convertir() {
     let valor = parseFloat(document.getElementById("capital").value);
     let resultado = 0;
-    let bitcoin = 2843960;
-    let dolar = 313;
-    let euro = 308;    
+    const bitcoin = 2843960;
+    const dolar = 313;
+    const euro = 308;    
     const Exchange = document.getElementById("resultadoExchange");
 
     if (document.getElementById("uno").checked){
