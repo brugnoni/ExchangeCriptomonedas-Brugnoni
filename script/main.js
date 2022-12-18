@@ -6,10 +6,10 @@ let ingresaNombre = prompt("Ingresa tu nombre: ");
 let ingresaEdad = prompt("Ingresa tu edad: ");
 function validarDatos(nombre, edad) {
     if (edad >= 18) {
-        alert("Sr. / Sra. " + nombre + " cumples con el requisito de edad, puedes ingresar...")
+        alert("Sr. / Sra. " + nombre + " tienes: "+ edad + " cumples con el requisito de edad, puedes ingresar...")
     }
     else {
-        alert("Sr. / Sra. " + nombre + " no cumples con los requisitos de edad, debes salir del sitio")
+        alert("Sr. / Sra. " + nombre + "tienes: "+ edad + " no cumples con los requisitos de edad, debes salir del sitio");
     }
 }
 validarDatos(ingresaNombre, ingresaEdad);
@@ -44,6 +44,7 @@ function convertir() {
         alert("Ingrese todos los datos requeridos!!!")
     }
 }
+
 // document.getElementById("") es como utilizar el enlace de un ID
 // Utilizando el (document.getElementById("").value)
 // se obtiene un elemento del html y recoge un valor
@@ -87,3 +88,37 @@ function calcular() {
 
 }
 
+
+
+// Utilizando un array muestro al usuario datos relevantes
+// agregue nuevos objetos al array
+// estos datos se muestran en consola y en forma de alerts
+
+function mostrarMonedas() {
+const monedas = [
+    {id:1, nombre:"Dolar", precio:320, simbolo:"$"},
+    {id:2, nombre:"Euro", precio:310, simbolo:"€"},
+    {id:3, nombre:"Bitcoin", precio:2886920, simbolo:"$"},
+]; 
+
+class Monedas {
+    constructor (id, nombre, precio, simbolo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.simbolo = simbolo;
+    }
+}
+console.log(monedas);
+monedas.push({id:4,nombre:"Ethereum", precio:379289, simbolo:"$"});
+console.log(monedas);
+
+for (let i = 0; i < 4; i++){
+   let mostrarMonedas = monedas[i];
+   console.log(mostrarMonedas.simbolo+mostrarMonedas.precio.toFixed(2)+" in ARS");
+}
+
+for (let i=0; i<monedas.length; i++) {
+    alert("El precio de 1 " + monedas[i].nombre + " hoy es: " + monedas[i].simbolo + " " + monedas[i].precio.toFixed(2) + " ARS");
+}
+}
