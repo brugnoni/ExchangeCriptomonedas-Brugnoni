@@ -1,35 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exchange</title>
-</head>
-<body>
-    <!-- Exchange de monedas -->
-    <h3>EXCHANGE DE MONEDAS</h3>
-    <form action="">
-        <p>Selecciona la moneda que quieres recibir:</p>
-        <input type="radio" name="cambio" id="uno">Bitcoin
-        <input type="radio" name="cambio" id="dos">Dólar $
-        <input type="radio" name="cambio" id="tres">Euro €
-        <p>Ingresa monto disponible en ARS:</p>
-        <input type="number" id="capital" min="1" max="100000000" placeholder="$$$$$$$$$$$$">
-        <input type="button" value="Convertir" id="cotizador" onclick="convertir()">
-    </form>
-    <p id="resultadoExchange"></p>
-    <br>
-    
-    <!-- Calculadora -->
-    <h3>CALCULADORA</h1>
-    <input type="text" id="op1" placeholder="1er dato">        
-    <input type="text" id="operador" placeholder="(+, -, /, *)">
-    <input type="text" id="op2" placeholder="2do dato">
-    <input type="submit" value="Calcular" id="calcular" onclick=calcular()>
-    <p id="resultado"></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exchange de monedas</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Inicio de sesión -->
+    <div class="container">
+      <form class="row justify-content-center">
+        <label class="col-sm-12 text-center my-1" for="name"
+          >Nombre de usuario:</label
+        >
+        <input
+          class="col-sm-12 form-control my-1"
+          type="text"
+          id="name"
+          name="name"
+          required
+        />
+        <br />
+        <label class="col-sm-12 text-center my-1" for="age">Edad:</label>
+        <input
+          class="col-sm-12 form-control my-1"
+          type="number"
+          id="age"
+          name="age"
+          min="18"
+          required
+        />
+        <br /><br />
+        <button
+          class="col-sm-12 btn btn-primary my-3"
+          type="submit"
+          onclick="submitForm()"
+        >
+          Ingresar
+        </button>
+      </form>
 
-    <input type="button" value="¡Mostrar Precio de HOY!" onclick=mostrarMonedas()>
-</body>
-<script src="./script/main.js"></script>
+      <!-- Exchange de monedas -->
+      <h3 class="text-center">EXCHANGE DE MONEDAS</h3>
+      <form class="row justify-content-center">
+        <p class="col-sm-12 text-center">
+          Selecciona la moneda que quieres recibir:
+        </p>
+        <div class="col-sm-12 form-check text-center">
+          <input class="form-check-input" type="radio" name="cambio" id="uno" />
+          <label class="form-check-label" for="uno">Bitcoin</label>
+        </div>
+        <div class="col-sm-12 form-check text-center">
+          <input class="form-check-input" type="radio" name="cambio" id="dos" />
+          <label class="form-check-label" for="dos">Dólar $</label>
+        </div>
+        <div class="col-sm-12 form-check text-center">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="cambio"
+            id="tres"
+          />
+          <label class="form-check-label" for="tres">Euro €</label>
+        </div>
+        <div class="col-sm-12">
+          <p class="text-center">Ingresa monto disponible en ARS:</p>
+          <input
+            class="col-sm-12 form-control my-1"
+            type="number"
+            id="capital"
+            min="1"
+            max="100000000"
+            placeholder="$$$$$$$$$$$$"
+          />
+          <input
+            class="col-sm-12 btn btn-secondary my-1"
+            type="button"
+            value="Convertir"
+            id="cotizador"
+            onclick="convertir()"
+          />
+        </div>
+      </form>
+      <p id="resultadoExchange" class="text-center"></p>
+      <br />
+
+      <!-- Calculadora -->
+      <div class="container">
+        <form class="row justify-content-center">
+          <label class="col-sm-12 text-center my-1" for="num1">Number 1:</label>
+          <input
+            class="col-sm-12 form-control"
+            type="number"
+            id="num1"
+            name="num1"
+            required
+          />
+          <br />
+          <label class="col-sm-12 text-center my-1" for="num2">Number 2:</label>
+          <input
+            class="col-sm-12 form-control"
+            type="number"
+            id="num2"
+            name="num2"
+            required
+          />
+          <br />
+          <label class="col-sm-12 text-center my-1" for="operator"
+            >Operator:</label
+          >
+          <select class="col-sm-12 form-control" id="operator" name="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+          </select>
+          <br />
+          <br />
+          <button
+            class="col-sm-12 btn btn-primary"
+            type="button"
+            onclick="calcular()"
+          >
+            Calculate
+          </button>
+        </form>
+        <br />
+        <h3 id="result" class="text-center"></h3>
+      </div>
+
+      <!-- Lista Cripto -->
+      <div class="text-center">
+        <button
+          class="btn btn-secondary"
+          type="button"
+          onclick="mostrarMonedas()"
+        >
+          Mostrar Precio de HOY!
+        </button>
+        <h1>Lista de criptomonedas en USDT</h1>
+        <ol id="lista-criptomonedas"></ol>
+      </div>
+
+      <!-- Lista seguimiento de criptos -->
+      <h1 class="text-center">Lista de seguimiento</h1>
+      <div class="text-center">
+        <button class="btn btn-primary" id="agregar-btn">
+          Agregar a lista de seguimiento
+        </button>
+        <button class="btn btn-danger" id="remover-item-btn">
+          Eliminar de la lista de seguimiento
+        </button>
+
+        <p id="seguimiento" class="text-center"></p>
+        <ol id="lista-seguimiento" class="text-center"></ol>
+
+        <button class="btn btn-danger" onclick="borrarLista()">
+          Eliminar toda la lista
+        </button>
+      </div>
+    </div>
+  </body>
+  <script src="./script/main.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"
+  ></script>
 </html>

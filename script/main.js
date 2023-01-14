@@ -1,56 +1,70 @@
-alert("BIENVENIDOS al mayor sitio de cambio de monedas de Argentina");
+//Formulario de inicio de sesion
 
-//Validacion de datos
-
-let ingresaNombre = prompt("Ingresa tu nombre: ");
-let ingresaEdad = prompt("Ingresa tu edad: ");
-function validarDatos(nombre, edad) {
-    if (edad >= 18) {
-        alert("Sr. / Sra. " + nombre + " tienes: "+ edad + " años cumples con el requisito de edad, puedes ingresar...")
-    }
-    else {
-        alert("Sr. / Sra. " + nombre + "tienes: "+ edad + " años no cumples con los requisitos de edad, debes salir del sitio");
-    }
+function submitForm() {
+  let name = document.getElementById("name").value;
+  let age = document.getElementById("age").value;
+  if (age < 18) {
+    alert("Debes tener +18 para continuar!");
+    return;
+  }
+  if (!name || !age) {
+    alert("Completa los campos");
+    return;
+  }
+  sessionStorage.setItem("name", name);
+  sessionStorage.setItem("age", age);
+  alert("Bienvenido, " + name + "!");
 }
-validarDatos(ingresaNombre, ingresaEdad);
 
-
-// Exchange de monedas
+//Exchange de monedas
 
 function convertir() {
-    let valor = parseFloat(document.getElementById("capital").value);
-    let resultado = 0;
-    const bitcoin = 2843960;
-    const dolar = 313;
-    const euro = 308;    
-    const Exchange = document.getElementById("resultadoExchange");
+  let valor = parseFloat(document.getElementById("capital").value);
+  let resultado = 0;
+  const bitcoin = 2843960;
+  const dolar = 313;
+  const euro = 308;
+  const Exchange = document.getElementById("resultadoExchange");
 
-    if (document.getElementById("uno").checked){
-        resultado = valor / bitcoin;
-        alert("Monto ingresado: $" + valor.toFixed(2) + " ARS" + " || Recibiras a cambio: " + resultado.toFixed(2) + " BTC");
-        Exchange.innerText = "Recibiras: " + resultado.toFixed(2) + " BTC";        
-    }
-    else if (document.getElementById("dos").checked){
-        resultado = valor / dolar;
-        alert("Monto ingresado: $" + valor.toFixed(2) + " ARS" + " || Recibiras a cambio: $" + resultado.toFixed(2) + " USD");
-        Exchange.innerText = "Recibiras: $" + resultado.toFixed(2) + " USD";        
-    } 
-    else if (document.getElementById("tres").checked){
-        resultado = valor / euro;
-        alert("Monto ingresado: $" + valor.toFixed(2) + " ARS" + " || Recibiras a cambio: " + resultado.toFixed(2) + "€");
-        Exchange.innerText = "Recibiras: " + resultado.toFixed(2) + "€";
-    }   
-    else{
-        alert("Ingrese todos los datos requeridos!!!")
-    }
+  if (document.getElementById("uno").checked) {
+    resultado = valor / bitcoin;
+    alert(
+      "Monto ingresado: $" +
+        valor.toFixed(2) +
+        " ARS" +
+        " || Recibiras a cambio: " +
+        resultado.toFixed(2) +
+        " BTC"
+    );
+    Exchange.innerText = "Recibiras: " + resultado.toFixed(2) + " BTC";
+  } else if (document.getElementById("dos").checked) {
+    resultado = valor / dolar;
+    alert(
+      "Monto ingresado: $" +
+        valor.toFixed(2) +
+        " ARS" +
+        " || Recibiras a cambio: $" +
+        resultado.toFixed(2) +
+        " USD"
+    );
+    Exchange.innerText = "Recibiras: $" + resultado.toFixed(2) + " USD";
+  } else if (document.getElementById("tres").checked) {
+    resultado = valor / euro;
+    alert(
+      "Monto ingresado: $" +
+        valor.toFixed(2) +
+        " ARS" +
+        " || Recibiras a cambio: " +
+        resultado.toFixed(2) +
+        "€"
+    );
+    Exchange.innerText = "Recibiras: " + resultado.toFixed(2) + "€";
+  } else {
+    alert("Ingrese todos los datos requeridos!!!");
+  }
 }
 
-// document.getElementById("") es como utilizar el enlace de un ID
-// Utilizando el (document.getElementById("").value)
-// se obtiene un elemento del html y recoge un valor
-// de la misma forma un .checked, recoge el valor de si es true o false
-
-// Calculadora 
+// Calculadora
 
 const dato1 = document.getElementById("op1");
 const operadores1 = document.getElementById("operador");
@@ -59,64 +73,231 @@ const calcular1 = document.getElementById("calcular");
 const Resultado = document.getElementById("resultado");
 
 function calcular() {
-    let operador = operadores1.value;
-    let op1 = parseFloat(dato1.value);
-    let op2 = parseFloat(dato2.value);
+  let num1 = parseFloat(document.getElementById("num1").value);
+  let num2 = parseFloat(document.getElementById("num2").value);
+  let operator = document.getElementById("operator").value;
 
-    if((operador == "+" || operador == "-" || operador == "/" || operador == "*") && !isNaN(op1) && !isNaN(op2)) {
-        alert(" F E L I C I T A C I O N E S !!! Eres nuestro usuario N° 1.000.000 y ganaste el premio MAYOR!!! Te invitamos a que nos mandes tus datos asi podemos contactarnos contigo: https://ganaste10millonesdepesos.blogspot.com")
-        let resultado;
-        switch (operador) {
-            case "+":
-            resultado = op1 + op2
-            break;
-            case "-":
-            resultado = op1 - op2
-            break;
-            case "/":
-            resultado = op1 / op2
-            break;
-            case "*":
-            resultado = op1 * op2
-            break;     
-        }        
-        Resultado.innerText = "El resultado es: " + resultado;
+  if (!isNaN(num1) && !isNaN(num2)) {
+    let result;
+    switch (operator) {
+      case "+":
+        result = num1 + num2;
+        break;
+      case "-":
+        result = num1 - num2;
+        break;
+      case "*":
+        result = num1 * num2;
+        break;
+      case "/":
+        result = num1 / num2;
+        break;
     }
-    else {
-        alert("Operación no valida, ingrese uno de los siguientes operadores: (+, -, /, *)");
-    }
-
+    document.getElementById("result").innerHTML = "El Resultado es: " + result;
+  } else {
+    alert("Porfavor ingresa datos validos");
+  }
 }
 
-// Utilizando un array muestro al usuario datos relevantes
-// agregue nuevos objetos al array
-// estos datos se muestran en consola y en forma de alerts
+//Mostrar Precio de Hoy
 
 function mostrarMonedas() {
-const monedas = [
-    {id:1, nombre:"Dolar", precio:320, simbolo:"$"},
-    {id:2, nombre:"Euro", precio:310, simbolo:"€"},
-    {id:3, nombre:"Bitcoin", precio:2886920, simbolo:"$"},
-]; 
+  const monedas = [
+    { id: 1, nombre: "Dolar", precio: 320, simbolo: "$" },
+    { id: 2, nombre: "Euro", precio: 310, simbolo: "€" },
+    { id: 3, nombre: "Bitcoin", precio: 2886920, simbolo: "$" },
+  ];
+  console.log(monedas);
 
-class Monedas {
-    constructor (id, nombre, precio, simbolo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.simbolo = simbolo;
+  class Monedas {
+    constructor(id, nombre, precio, simbolo) {
+      this.id = id;
+      this.nombre = nombre;
+      this.precio = precio;
+      this.simbolo = simbolo;
     }
-}
-console.log(monedas);
-monedas.push({id:4,nombre:"Ethereum", precio:379289, simbolo:"$"});
-console.log(monedas);
+  }
+  console.log(Monedas);
+  monedas.push({ id: 4, nombre: "Ethereum", precio: 379289, simbolo: "$" });
+  console.log(monedas);
 
-for (let i = 0; i < 4; i++){
-   let mostrarMonedas = monedas[i];
-   console.log(mostrarMonedas.simbolo+mostrarMonedas.precio.toFixed(2)+" in ARS");
+  for (let i = 0; i < 4; i++) {
+    let mostrarMonedas = monedas[i];
+    console.log(
+      mostrarMonedas.simbolo + mostrarMonedas.precio.toFixed(2) + " in ARS"
+    );
+  }
+
+  for (let i = 0; i < monedas.length; i++) {
+    alert(
+      "El precio de 1 " +
+        monedas[i].nombre +
+        " hoy es: " +
+        monedas[i].simbolo +
+        " " +
+        monedas[i].precio.toFixed(2) +
+        " ARS"
+    );
+  }
 }
 
-for (let i=0; i<monedas.length; i++) {
-    alert("El precio de 1 " + monedas[i].nombre + " hoy es: " + monedas[i].simbolo + " " + monedas[i].precio.toFixed(2) + " ARS");
+//Array de criptomonedas de la lista
+
+let criptomonedas = [
+  {
+    nombre: "Bitcoin",
+    simbolo: "BTC",
+    precio: 35000,
+    id: 1,
+  },
+  {
+    nombre: "Ethereum",
+    simbolo: "ETH",
+    precio: 2000,
+    id: 2,
+  },
+  {
+    nombre: "Litecoin",
+    simbolo: "LTC",
+    precio: 190,
+    id: 3,
+  },
+];
+
+// Agregar objetos al Array
+
+criptomonedas.push({
+  nombre: "Euro",
+  simbolo: "EUR",
+  precio: 1.2,
+  id: 4,
+});
+
+criptomonedas.push({
+  nombre: "Dólar",
+  simbolo: "USD",
+  precio: 1.0,
+  id: 5,
+});
+
+criptomonedas.push({
+  nombre: "Cardano",
+  simbolo: "ADA",
+  precio: 0.3,
+  id: 1,
+});
+
+criptomonedas.push({
+  nombre: "Doge Coin",
+  simbolo: "Doge",
+  precio: 0.07,
+  id: 6,
+});
+
+criptomonedas.push({
+  nombre: "Kadena",
+  simbolo: "KDA",
+  precio: 5.0,
+  id: 7,
+});
+
+criptomonedas.push({
+  nombre: "Ethereum Classic",
+  simbolo: "ETHC",
+  precio: 40.0,
+  id: 8,
+});
+
+// Lista de criptomonedas
+function mostrarLista() {
+  let lista = document.getElementById("lista-criptomonedas");
+  lista.innerHTML = " ";
+  criptomonedas.forEach(function (criptomoneda) {
+    let item = document.createElement("li");
+    item.innerHTML = `${criptomoneda.nombre} (${criptomoneda.simbolo}): $${criptomoneda.precio}`;
+    lista.appendChild(item);
+  });
 }
+
+mostrarLista();
+
+// Lista de seguimiento personal
+
+document.getElementById("seguimiento").innerText =
+  "Aquí podrás visualizar tus criptos seleccionadas:";
+
+let seleccionadas = JSON.parse(localStorage.getItem("seleccionadas")) || [];
+
+//Agregar a la lista
+
+function agregarASeleccionadas() {
+  let index = parseInt(
+    prompt(
+      "Ingresa el índice de la criptomoneda que deseas agregar a tu lista de seguimiento (del 0 al 8)"
+    )
+  );
+  if (index >= 0 && index < criptomonedas.length) {
+    if (seleccionadas.find((c) => c.nombre === criptomonedas[index].nombre)) {
+      alert("La criptomoneda ya se encuentra en tu lista de seguimiento");
+      return;
+    }
+    seleccionadas.push(criptomonedas[index]);
+    seleccionadas.sort((a, b) => {
+      return (
+        criptomonedas.findIndex((c) => c.nombre === a.nombre) -
+        criptomonedas.findIndex((c) => c.nombre === b.nombre)
+      );
+    });
+    localStorage.setItem("seleccionadas", JSON.stringify(seleccionadas));
+    mostrarListaSeguimiento();
+  } else {
+    alert("Indice Invalido");
+  }
 }
+
+// Eliminar de la lista
+function eliminarDeSeleccionadas() {
+  let index = parseInt(
+    prompt(
+      "Ingresa el índice de la criptomoneda que deseas eliminar de tu lista de seguimiento (del 0 al 8)"
+    )
+  );
+  if (index >= 0 && index < seleccionadas.length) {
+    seleccionadas.splice(index, 1);
+    localStorage.setItem("seleccionadas", JSON.stringify(seleccionadas));
+    mostrarListaSeguimiento();
+  } else {
+    alert("Indice Invalido");
+  }
+}
+// Eliminar la lista completa
+
+function borrarLista() {
+  seleccionadas = [];
+  localStorage.setItem("seleccionadas", JSON.stringify(seleccionadas));
+  mostrarListaSeguimiento();
+}
+
+// Mostrar en tiempo real la lista personal de seguimiento
+
+function mostrarListaSeguimiento() {
+  let listaSeguimiento = document.getElementById("lista-seguimiento");
+  listaSeguimiento.innerHTML = "";
+  seleccionadas.forEach(function (criptomoneda) {
+    let item = document.createElement("li");
+    item.innerHTML = `${criptomoneda.nombre} (${criptomoneda.simbolo}): $${criptomoneda.precio}`;
+    listaSeguimiento.appendChild(item);
+  });
+}
+
+// al agregarlos a este DomContentLoaded, el evento espera a que el DOM este completamente cargado antes de realizar los evento y las functions)
+document.addEventListener("DOMContentLoaded", function () {
+  mostrarLista();
+  mostrarListaSeguimiento();
+  document
+    .getElementById("agregar-btn")
+    .addEventListener("click", agregarASeleccionadas);
+  document
+    .getElementById("remover-item-btn")
+    .addEventListener("click", eliminarDeSeleccionadas);
+});
