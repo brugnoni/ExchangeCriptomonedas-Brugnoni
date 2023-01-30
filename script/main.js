@@ -1,5 +1,4 @@
 //Formulario de inicio de sesion
-
 function submitForm() {
   let name = document.getElementById("name").value;
   let age = document.getElementById("age").value;
@@ -20,11 +19,16 @@ function submitForm() {
 
 function convertir() {
   let valor = parseFloat(document.getElementById("capital").value);
+  if (!valor || isNaN(valor)) {
+    alert("Ingrese un monto válido");
+    return;
+}
   let resultado = 0;
   const bitcoin = 2843960;
   const dolar = 313;
   const euro = 308;
   const Exchange = document.getElementById("resultadoExchange");
+  
 
   if (document.getElementById("uno").checked) {
     resultado = valor / bitcoin;
@@ -141,163 +145,55 @@ function mostrarMonedas() {
   }
 }
 
-//Array de criptomonedas de la lista
+//Lista de criptos con async, fetch, API,
 
-let criptomonedas = [
-  {
-    nombre: "Bitcoin",
-    simbolo: "BTC",
-    precio: 35000,
-    id: 1,
-  },
-  {
-    nombre: "Ethereum",
-    simbolo: "ETH",
-    precio: 2000,
-    id: 2,
-  },
-  {
-    nombre: "Litecoin",
-    simbolo: "LTC",
-    precio: 190,
-    id: 3,
-  },
-];
+const fullList = document.querySelector("#full-list");
+const selectedList = document.querySelector("#selected-list");
+let selectedCryptos = [];
 
-// Agregar objetos al Array
-
-criptomonedas.push({
-  nombre: "Euro",
-  simbolo: "EUR",
-  precio: 1.2,
-  id: 4,
-});
-
-criptomonedas.push({
-  nombre: "Dólar",
-  simbolo: "USD",
-  precio: 1.0,
-  id: 5,
-});
-
-criptomonedas.push({
-  nombre: "Cardano",
-  simbolo: "ADA",
-  precio: 0.3,
-  id: 1,
-});
-
-criptomonedas.push({
-  nombre: "Doge Coin",
-  simbolo: "Doge",
-  precio: 0.07,
-  id: 6,
-});
-
-criptomonedas.push({
-  nombre: "Kadena",
-  simbolo: "KDA",
-  precio: 5.0,
-  id: 7,
-});
-
-criptomonedas.push({
-  nombre: "Ethereum Classic",
-  simbolo: "ETHC",
-  precio: 40.0,
-  id: 8,
-});
-
-// Lista de criptomonedas
-function mostrarLista() {
-  let lista = document.getElementById("lista-criptomonedas");
-  lista.innerHTML = " ";
-  criptomonedas.forEach(function (criptomoneda) {
-    let item = document.createElement("li");
-    item.innerHTML = `${criptomoneda.nombre} (${criptomoneda.simbolo}): $${criptomoneda.precio}`;
-    lista.appendChild(item);
-  });
-}
-
-mostrarLista();
-
-// Lista de seguimiento personal
-
-document.getElementById("seguimiento").innerText =
-  "Aquí podrás visualizar tus criptos seleccionadas:";
-
-let seleccionadas = JSON.parse(localStorage.getItem("seleccionadas")) || [];
-
-//Agregar a la lista
-
-function agregarASeleccionadas() {
-  let index = parseInt(
-    prompt(
-      "Ingresa el índice de la criptomoneda que deseas agregar a tu lista de seguimiento (del 0 al 8)"
-    )
-  );
-  if (index >= 0 && index < criptomonedas.length) {
-    if (seleccionadas.find((c) => c.nombre === criptomonedas[index].nombre)) {
-      alert("La criptomoneda ya se encuentra en tu lista de seguimiento");
-      return;
-    }
-    seleccionadas.push(criptomonedas[index]);
-    seleccionadas.sort((a, b) => {
-      return (
-        criptomonedas.findIndex((c) => c.nombre === a.nombre) -
-        criptomonedas.findIndex((c) => c.nombre === b.nombre)
-      );
+async function getCryptoData() {
+  try {
+    const response = await fetch(
+      "https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD"
+    );
+    const data = await response.json();
+    data.Data.sort((a, b) => b.DISPLAY.USD.PRICE - a.DISPLAY.USD.PRICE);
+    data.Data.forEach((crypto) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${crypto.CoinInfo.Name}: ${crypto.DISPLAY.USD.PRICE}`;
+      li.addEventListener("click", () => {
+        if (selectedCryptos.includes(crypto)) {
+          alert(`${crypto.CoinInfo.Name} ya esta en la lista`);
+        } else {
+          selectedCryptos.push(crypto);
+          renderSelectedList(data);
+        }
+      });
+      fullList.appendChild(li);
     });
-    localStorage.setItem("seleccionadas", JSON.stringify(seleccionadas));
-    mostrarListaSeguimiento();
-  } else {
-    alert("Indice Invalido");
+  } catch (error) {
+    console.error(error);
   }
 }
 
-// Eliminar de la lista
-function eliminarDeSeleccionadas() {
-  let index = parseInt(
-    prompt(
-      "Ingresa el índice de la criptomoneda que deseas eliminar de tu lista de seguimiento (del 0 al 8)"
-    )
-  );
-  if (index >= 0 && index < seleccionadas.length) {
-    seleccionadas.splice(index, 1);
-    localStorage.setItem("seleccionadas", JSON.stringify(seleccionadas));
-    mostrarListaSeguimiento();
-  } else {
-    alert("Indice Invalido");
-  }
-}
-// Eliminar la lista completa
-
-function borrarLista() {
-  seleccionadas = [];
-  localStorage.setItem("seleccionadas", JSON.stringify(seleccionadas));
-  mostrarListaSeguimiento();
-}
-
-// Mostrar en tiempo real la lista personal de seguimiento
-
-function mostrarListaSeguimiento() {
-  let listaSeguimiento = document.getElementById("lista-seguimiento");
-  listaSeguimiento.innerHTML = "";
-  seleccionadas.forEach(function (criptomoneda) {
-    let item = document.createElement("li");
-    item.innerHTML = `${criptomoneda.nombre} (${criptomoneda.simbolo}): $${criptomoneda.precio}`;
-    listaSeguimiento.appendChild(item);
+async function renderSelectedList() {
+  selectedList.innerHTML = "";
+  selectedCryptos.sort((a, b) => b.DISPLAY.USD.PRICE - a.DISPLAY.USD.PRICE);
+  selectedCryptos.forEach((crypto) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${crypto.CoinInfo.Name}: ${crypto.DISPLAY.USD.PRICE}`;
+    li.innerHTML += "&nbsp;";
+    const removeBtn = document.createElement("button");
+    removeBtn.innerHTML = "Quitar de la lista";
+    removeBtn.classList.add("btn");
+    removeBtn.addEventListener("click", () => {
+      selectedCryptos.splice(selectedCryptos.indexOf(crypto), 1);
+      renderSelectedList();
+    });
+    li.appendChild(removeBtn);
+    selectedList.appendChild(li);
   });
 }
 
-// al agregarlos a este DomContentLoaded, el evento espera a que el DOM este completamente cargado antes de realizar los evento y las functions)
-document.addEventListener("DOMContentLoaded", function () {
-  mostrarLista();
-  mostrarListaSeguimiento();
-  document
-    .getElementById("agregar-btn")
-    .addEventListener("click", agregarASeleccionadas);
-  document
-    .getElementById("remover-item-btn")
-    .addEventListener("click", eliminarDeSeleccionadas);
-});
+getCryptoData();
+renderSelectedList();
