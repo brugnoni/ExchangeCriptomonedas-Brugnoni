@@ -5,7 +5,7 @@ function submitForm() {
   if (age < 18) {
   Swal.fire({
   title: 'Debes tener +18 para continuar!',
-  icon: 'error',
+  icon: 'warning',
   showConfirmButton: false,
   timer: 1500
   });
@@ -14,7 +14,7 @@ function submitForm() {
   if (!name || !age) {
   Swal.fire({
   title: 'Completa los campos',
-  icon: 'error',
+  icon: 'warning',
   showConfirmButton: false,
   timer: 1500
   });
