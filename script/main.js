@@ -3,17 +3,32 @@ function submitForm() {
   let name = document.getElementById("name").value;
   let age = document.getElementById("age").value;
   if (age < 18) {
-    alert("Debes tener +18 para continuar!");
-    return;
+  Swal.fire({
+  title: 'Debes tener +18 para continuar!',
+  icon: 'error',
+  showConfirmButton: false,
+  timer: 1500
+  });
+  return;
   }
   if (!name || !age) {
-    alert("Completa los campos");
-    return;
+  Swal.fire({
+  title: 'Completa los campos',
+  icon: 'error',
+  showConfirmButton: false,
+  timer: 1500
+  });
+  return;
   }
   sessionStorage.setItem("name", name);
   sessionStorage.setItem("age", age);
-  alert("Bienvenido, " + name + "!");
-}
+  Swal.fire({
+  title: 'Bienvenido, ' + name + '!',
+  icon: 'success',
+  showConfirmButton: false,
+  timer: 1500
+  });
+  }
 
 //Exchange de monedas
 
@@ -105,45 +120,36 @@ function calcular() {
 
 //Mostrar Precio de Hoy
 
-function mostrarMonedas() {
+let currentIndex = 0;
+
+function mostrarAlertas(index) {
   const monedas = [
     { id: 1, nombre: "Dolar", precio: 320, simbolo: "$" },
     { id: 2, nombre: "Euro", precio: 310, simbolo: "€" },
     { id: 3, nombre: "Bitcoin", precio: 2886920, simbolo: "$" },
+    { id: 4, nombre: "Ethereum", precio: 379289, simbolo: "$" },
   ];
-  console.log(monedas);
+  
+  if (index >= monedas.length) {
+    return;
+  }
 
-  class Monedas {
-    constructor(id, nombre, precio, simbolo) {
-      this.id = id;
-      this.nombre = nombre;
-      this.precio = precio;
-      this.simbolo = simbolo;
+  Swal.fire({
+    title: "El precio de 1 " + monedas[index].nombre + " hoy es:",
+    text: monedas[index].simbolo + " " + monedas[index].precio.toFixed(2) + " ARS",
+    icon: 'info',
+    showCancelButton: false,
+    confirmButtonText: 'OK'
+  }).then((result) => {
+    if (result.value) {
+      mostrarAlertas(index + 1);
     }
-  }
-  console.log(Monedas);
-  monedas.push({ id: 4, nombre: "Ethereum", precio: 379289, simbolo: "$" });
-  console.log(monedas);
-
-  for (let i = 0; i < 4; i++) {
-    let mostrarMonedas = monedas[i];
-    console.log(
-      mostrarMonedas.simbolo + mostrarMonedas.precio.toFixed(2) + " in ARS"
-    );
-  }
-
-  for (let i = 0; i < monedas.length; i++) {
-    alert(
-      "El precio de 1 " +
-        monedas[i].nombre +
-        " hoy es: " +
-        monedas[i].simbolo +
-        " " +
-        monedas[i].precio.toFixed(2) +
-        " ARS"
-    );
-  }
+  });
 }
+
+document.getElementById("show-coins-button").addEventListener("click", function () {
+  mostrarAlertas(0);
+});
 
 //Lista de criptos con async, fetch, API,
 

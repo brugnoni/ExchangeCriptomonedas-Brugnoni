@@ -9,6 +9,10 @@ div {
   flex-direction: column;
 }
 
+h1 {
+  text-align: center;
+}
+
 body {
   height: 100vh;
   background-color: #191d21;
@@ -77,4 +81,25 @@ button.btn {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+}
+
+.swal2-popup {
+  background-color: #151826 !important;
+  color: #fff !important;
+
+}
+
+.swal2-header {
+  background-color: #151826 !important;
+  color: #fff !important;
+}
+
+.swal2-content {
+  background-color: #ffc107;
+  color: #fff !important;
+}
+
+.swal2-confirm {
+  background-color: #ffc107 !important;
+  color: #fff !important;
 }
