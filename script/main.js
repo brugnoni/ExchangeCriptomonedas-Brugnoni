@@ -35,9 +35,13 @@ function submitForm() {
 function convertir() {
   let valor = parseFloat(document.getElementById("capital").value);
   if (!valor || isNaN(valor)) {
-    alert("Ingrese un monto válido");
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Ingrese un monto válido',
+    });
     return;
-}
+  }
   let resultado = 0;
   const bitcoin = 2843960;
   const dolar = 313;
@@ -47,42 +51,36 @@ function convertir() {
 
   if (document.getElementById("uno").checked) {
     resultado = valor / bitcoin;
-    alert(
-      "Monto ingresado: $" +
-        valor.toFixed(2) +
-        " ARS" +
-        " || Recibiras a cambio: " +
-        resultado.toFixed(2) +
-        " BTC"
-    );
+    Swal.fire({
+      icon: 'success',
+      title: 'Exito!',
+      text: 'Monto ingresado: $' + valor.toFixed(2) + ' ARS || Recibiras a cambio: ' + resultado.toFixed(2) + ' BTC',
+    });
     Exchange.innerText = "Recibiras: " + resultado.toFixed(2) + " BTC";
   } else if (document.getElementById("dos").checked) {
     resultado = valor / dolar;
-    alert(
-      "Monto ingresado: $" +
-        valor.toFixed(2) +
-        " ARS" +
-        " || Recibiras a cambio: $" +
-        resultado.toFixed(2) +
-        " USD"
-    );
+    Swal.fire({
+      icon: 'success',
+      title: 'Exito!',
+      text: 'Monto ingresado: $' + valor.toFixed(2) + ' ARS || Recibiras a cambio: $' + resultado.toFixed(2) + ' USD',
+    });
     Exchange.innerText = "Recibiras: $" + resultado.toFixed(2) + " USD";
   } else if (document.getElementById("tres").checked) {
     resultado = valor / euro;
-    alert(
-      "Monto ingresado: $" +
-        valor.toFixed(2) +
-        " ARS" +
-        " || Recibiras a cambio: " +
-        resultado.toFixed(2) +
-        "€"
-    );
+    Swal.fire({
+      icon: 'success',
+      title: 'Exito!',
+      text: 'Monto ingresado: $' + valor.toFixed(2) + ' ARS || Recibiras a cambio: ' + resultado.toFixed(2) + '€',
+    });
     Exchange.innerText = "Recibiras: " + resultado.toFixed(2) + "€";
   } else {
-    alert("Ingrese todos los datos requeridos!!!");
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Ingrese todos los datos requeridos!!!',
+    });
   }
 }
-
 // Calculadora
 
 const dato1 = document.getElementById("op1");
@@ -92,30 +90,38 @@ const calcular1 = document.getElementById("calcular");
 const Resultado = document.getElementById("resultado");
 
 function calcular() {
-  let num1 = parseFloat(document.getElementById("num1").value);
-  let num2 = parseFloat(document.getElementById("num2").value);
-  let operator = document.getElementById("operator").value;
+let num1 = parseFloat(document.getElementById("num1").value);
+let num2 = parseFloat(document.getElementById("num2").value);
+let operator = document.getElementById("operator").value;
 
-  if (!isNaN(num1) && !isNaN(num2)) {
-    let result;
-    switch (operator) {
-      case "+":
-        result = num1 + num2;
-        break;
-      case "-":
-        result = num1 - num2;
-        break;
-      case "*":
-        result = num1 * num2;
-        break;
-      case "/":
-        result = num1 / num2;
-        break;
-    }
-    document.getElementById("result").innerHTML = "El Resultado es: " + result;
-  } else {
-    alert("Porfavor ingresa datos validos");
-  }
+if (!isNaN(num1) && !isNaN(num2)) {
+let result;
+switch (operator) {
+case "+":
+result = num1 + num2;
+break;
+case "-":
+result = num1 - num2;
+break;
+case "*":
+result = num1 * num2;
+break;
+case "/":
+result = num1 / num2;
+break;
+}
+Swal.fire({
+title: "Resultado",
+text: "El Resultado es: " + result,
+icon: "success",
+});
+} else {
+Swal.fire({
+title: "Error",
+text: "Porfavor ingresa datos validos",
+icon: "error",
+});
+}
 }
 
 //Mostrar Precio de Hoy
