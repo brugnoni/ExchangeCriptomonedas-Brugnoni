@@ -10,3 +10,5 @@ Local y Session Storage & JSON
 Operadores avanzados 
 Librerías
 Avance con la utilización de APIs, fetch, async, set
+
+Pages: https://brugnoni.github.io/ProyectoFinal-JavaScript/
